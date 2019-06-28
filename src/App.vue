@@ -1,14 +1,49 @@
 <template lang="pug">
-  <div id="app">
-    <h1>Hello</h1>
-  </div>
+  .wrapper
+    header
+      .navbar
+        .container
+          .navbar-content
+            router-link.header-logo(
+              to="/"
+             ) Film
+            .button-burger(
+              @click="menuShow = !menuShow"
+              :class="{active: menuShow}"
+            )
+              span.line.line-1
+              span.line.line-2
+              span.line.line-3
+            .navbar-list__wrapper(
+              :class="{active: menuShow}"
+            )
+              ul.navbar-list
+                li.navbar-item(
+                  v-for="link in linkMenu"
+                  :key = "link.title"
+                  @click="menuShow = false"
+                )
+                  router-link.navbar-link(
+                    :to="`${link.url}`"
+                  ) {{ link.title }}
+        router-view
 </template>
 
 <script>
 export default {
-  name: 'App'
+  data () {
+    return {
+      menuShow: false,
+      linkMenu: [
+        {title: 'Главная', url: '/'},
+        {title: 'Войти', url: '/login'},
+        {title: 'Регистрация', url: '/registration'}
+      ]
+    }
+  }
 }
 </script>
 
 <style lang="stylus">
+@import './assets/stylus/main.styl';
 </style>
